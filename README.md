@@ -9,12 +9,13 @@
 #### Description
 
 + Simple EventBus (EventEmitter)
++ Quick for update. (No need share context with react)
 
 ---
 
 #### Usage
 ```js
-npm install event-bus-ez
+npm install event-bus-ez --save
 ```
 
 Import the module in the place you want to use:
@@ -30,19 +31,22 @@ import EventBus from 'event-bus-ez'
 ```js
     // EventBus.$emit => notify event(name, data)
     // EventBus.$on => register event(name, func)
-    // EventBus.$once => register event(name, func)
+    // EventBus.$once => register event(name, func) one time
     // EventBus.$off => off event (name, func)
     // EventBus.$offAll => offAll event(name)
 
+	// EventBus.$reset => clear all event(name) // clear all
+
+	// simple for react-hook js
     React.useEffect(() => {
-        EventBus.$on("abc", func)
-        // EventBus.$on("def", func2)
+        EventBus.$on("NAME_ABC", func)
+        // EventBus.$on("NAME_DEF", func2)
         // EventBus.$on("xzy", func3)
 
-        // clean 
+        // clean
         return function() {
-            EventBus.$off("abc", func)
-            //...
+            EventBus.$off("NAME_ABC", func)
+            //...EventBus.$off("NAME_DEF", func2)
         }
     }, [])
 
@@ -52,10 +56,14 @@ import EventBus from 'event-bus-ez'
       alert(item)
     }
 
+	// from another element
     buttonClick = () => {
-        EventBus.$emit("abc", 434, 44)
-        // EventBus.$emit("abc", 434, 44, 44, "434")
+        EventBus.$emit("NAME_ABC", 434, 44)
+        // EventBus.$emit("NAME_DEF", [434, 44], 44, "434")
     }
+	
+	
+	// __prBusData => dont change it
 ```
 
 <br />
